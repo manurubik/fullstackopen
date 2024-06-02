@@ -33,14 +33,14 @@ const Statistics = (props) => {
 
   if (total !== 0) {
     return (
-      <>
+      <table>
         <StatisticLine text="good" value={props.good} />
         <StatisticLine text="neutral" value={props.neutral} />
         <StatisticLine text="bad" value={props.bad} />
         <StatisticLine text="all" value={total} />
         <StatisticLine text="average" value={avg} />
         <StatisticLine text="positive" value={porcentaje} />
-      </>
+      </table>
     );
   } else {
     return "No feedback given";
@@ -49,8 +49,8 @@ const Statistics = (props) => {
 
 const StatisticLine = (props) => {
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td> <td> {props.value}</td>
+    </tr>
   );
 };

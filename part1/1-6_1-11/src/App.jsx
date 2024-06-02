@@ -26,20 +26,21 @@ const Button = (props) => {
 
 const Statistics = (props) => {
   let total = props.good + props.neutral + props.bad;
-  let avg =
-    total !== 0
-      ? (props.good * 1 + props.neutral * 0 + props.bad * -1) / total
-      : 0;
-  let porcentaje = total !== 0 ? (props.good / total) * 100 : 0;
+  let avg = (props.good * 1 + props.neutral * 0 + props.bad * -1) / total;
+  let porcentaje = (props.good / total) * 100;
 
-  return (
-    <>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>all {total}</p>
-      <p>average {avg}</p>
-      <p>positive {porcentaje}%</p>
-    </>
-  );
+  if (total !== 0) {
+    return (
+      <>
+        <p>good {props.good}</p>
+        <p>neutral {props.neutral}</p>
+        <p>bad {props.bad}</p>
+        <p>all {total}</p>
+        <p>average {avg}</p>
+        <p>positive {porcentaje}%</p>
+      </>
+    );
+  } else {
+    return "No feedback given";
+  }
 };

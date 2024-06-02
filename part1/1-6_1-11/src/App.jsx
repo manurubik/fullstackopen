@@ -21,10 +21,12 @@ const App = () => {
 export default App;
 
 const Button = (props) => {
+  // Step 5 => Done since Step 1 (1.6)
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
 const Statistics = (props) => {
+  // Step 3 => Done since Step 1 (1.6)
   let total = props.good + props.neutral + props.bad;
   let avg = (props.good * 1 + props.neutral * 0 + props.bad * -1) / total;
   let porcentaje = (props.good / total) * 100;
@@ -32,15 +34,23 @@ const Statistics = (props) => {
   if (total !== 0) {
     return (
       <>
-        <p>good {props.good}</p>
-        <p>neutral {props.neutral}</p>
-        <p>bad {props.bad}</p>
-        <p>all {total}</p>
-        <p>average {avg}</p>
-        <p>positive {porcentaje}%</p>
+        <StatisticLine text="good" value={props.good} />
+        <StatisticLine text="neutral" value={props.neutral} />
+        <StatisticLine text="bad" value={props.bad} />
+        <StatisticLine text="all" value={total} />
+        <StatisticLine text="average" value={avg} />
+        <StatisticLine text="positive" value={porcentaje} />
       </>
     );
   } else {
     return "No feedback given";
   }
+};
+
+const StatisticLine = (props) => {
+  return (
+    <p>
+      {props.text} {props.value}
+    </p>
+  );
 };

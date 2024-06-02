@@ -25,11 +25,21 @@ const Button = (props) => {
 };
 
 const Statistics = (props) => {
+  let total = props.good + props.neutral + props.bad;
+  let average =
+    total !== 0
+      ? (props.good * 1 + props.neutral * 0 + props.bad * -1) / total
+      : 0;
+  let porcentaje = total !== 0 ? (props.good / total) * 100 : 0;
+
   return (
     <>
       <p>good {props.good}</p>
       <p>neutral {props.neutral}</p>
       <p>bad {props.bad}</p>
+      <p>all {total}</p>
+      <p>average {average}</p>
+      <p>positive {porcentaje}%</p>
     </>
   );
 };

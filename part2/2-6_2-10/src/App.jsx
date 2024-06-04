@@ -10,9 +10,15 @@ const App = () => {
 
   const addPerson = (e) => {
     e.preventDefault();
-    const newPerson = { name: newName };
-    setPersons(persons.concat(newPerson));
-    setNewName(""); // Clear the input field after adding
+    const repeatedNames = persons.filter((person) => person.name === newName);
+
+    if (repeatedNames.length > 0) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      const newPerson = { name: newName };
+      setPersons(persons.concat(newPerson));
+      setNewName(""); // Clear the input field after adding
+    }
   };
 
   return (

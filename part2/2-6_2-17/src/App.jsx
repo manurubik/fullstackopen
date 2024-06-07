@@ -42,6 +42,19 @@ const App = () => {
     }
   };
 
+  const removePerson = (id, name) => {
+    if (window.confirm(`Remove ${name}?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter((person) => person.id !== id));
+        })
+        .catch((error) => {
+          console.error("There was an error removing the person:", error);
+        });
+    }
+  };
+
   const searchResults = persons.filter((person) =>
     person.name.toLowerCase().includes(dataSearch.toLowerCase())
   );
@@ -68,7 +81,7 @@ const App = () => {
         handleNumber={handleNumber}
       />
       <h3>Numbers</h3>
-      <Persons persons={searchResults} />
+      <Persons persons={searchResults} onRemove={removePerson} />
     </>
   );
 };

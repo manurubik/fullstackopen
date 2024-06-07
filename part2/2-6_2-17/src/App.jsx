@@ -48,9 +48,9 @@ const App = () => {
   );
 
   useEffect(() => {
-    personService
-      .getAll()
-      .then((persons) => setPersons(persons))
+    axios
+      .get("http://localhost:3001/persons")
+      .then((response) => setPersons(response.data))
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
       });

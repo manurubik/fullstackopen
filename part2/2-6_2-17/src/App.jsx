@@ -27,10 +27,18 @@ const App = () => {
     if (repeatedNames.length > 0) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      const newPerson = { name: newName, number: newNumber };
-      setPersons(persons.concat(newPerson));
-      setNewName("");
-      setNewNumber("");
+      const newId = (persons.length + 1).toString;
+      const newPerson = { name: newName, number: newNumber, id: newId };
+      axios
+        .post("http://localhost:3001/persons", newPerson)
+        .then((response) => {
+          setPersons(persons.concat(response.data));
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          console.error("There was an error adding the person:", error);
+        });
     }
   };
 
@@ -41,7 +49,10 @@ const App = () => {
   useEffect(() => {
     axios
       .get("http://localhost:3001/persons")
-      .then((response) => setPersons(response.data));
+      .then((response) => setPersons(response.data))
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   }, []);
 
   return (

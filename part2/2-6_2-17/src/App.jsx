@@ -22,10 +22,29 @@ const App = () => {
 
   const addPerson = (e) => {
     e.preventDefault();
-    const repeatedNames = persons.filter((person) => person.name === newName);
+    const repeatedName = persons.find((person) => person.name === newName);
 
-    if (repeatedNames.length > 0) {
-      alert(`${newName} is already added to phonebook`);
+    if (repeatedName) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook. Replace the old number with a new one?`
+        )
+      ) {
+        const matchingPerson = { ...repeatedName, number: newNumber };
+
+        personService
+          .update(repeatedName.id, matchingPerson)
+          .then((match) => {
+            setPersons(
+              persons.map((person) => (person.id !== match.id ? person : match))
+            );
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((error) => {
+            console.error("There was an error updating the person:", error);
+          });
+      }
     } else {
       const newId = (persons.length + 1).toString();
       const newPerson = { name: newName, number: newNumber, id: newId };

@@ -3,12 +3,14 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import personService from "./services/persons";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [dataSearch, setDataSearch] = useState("");
+  const [notification, setNotification] = useState(null);
 
   const handleName = (e) => {
     setNewName(e.target.value);
@@ -40,6 +42,7 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
+            showNotification(`Updated ${match.name} number`);
           })
           .catch((error) => {
             console.error("There was an error updating the person:", error);
@@ -54,6 +57,7 @@ const App = () => {
           setPersons(persons.concat(person));
           setNewName("");
           setNewNumber("");
+          showNotification(`Added ${person.name}`);
         })
         .catch((error) => {
           console.error("There was an error adding the person:", error);
@@ -74,6 +78,13 @@ const App = () => {
     }
   };
 
+  const showNotification = (message) => {
+    setNotification(message);
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+  };
+
   const searchResults = persons.filter((person) =>
     person.name.toLowerCase().includes(dataSearch.toLowerCase())
   );
@@ -90,6 +101,7 @@ const App = () => {
   return (
     <>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Filter dataSearch={dataSearch} handleSearch={handleSearch} />
       <h3>Add a new</h3>
       <PersonForm

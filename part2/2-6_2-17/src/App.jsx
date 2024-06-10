@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [dataSearch, setDataSearch] = useState("");
   const [notification, setNotification] = useState(null);
+  const [notificationStyle, setNotificationStyle] = useState(true);
 
   const handleName = (e) => {
     setNewName(e.target.value);
@@ -46,6 +47,13 @@ const App = () => {
           })
           .catch((error) => {
             console.error("There was an error updating the person:", error);
+            setNotificationStyle(false);
+            showNotification(
+              `Information of ${newName} has already been removed from server`
+            );
+            setTimeout(() => {
+              setNotificationStyle(true);
+            }, 3000);
           });
       }
     } else {
@@ -101,7 +109,7 @@ const App = () => {
   return (
     <>
       <h2>Phonebook</h2>
-      <Notification message={notification} />
+      <Notification message={notification} styles={notificationStyle} />
       <Filter dataSearch={dataSearch} handleSearch={handleSearch} />
       <h3>Add a new</h3>
       <PersonForm

@@ -1,0 +1,6 @@
+DELETE http://localhost:3001/api/persons/4
+
+// HTTP/1.1 204 No Content
+// X-Powered-By: Express
+// Date: Tue, 18 Jun 2024 22:33:47 GMT
+// Connection: close

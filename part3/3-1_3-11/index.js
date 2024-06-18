@@ -10,8 +10,24 @@ let persons = [
   { id: 4, name: "Mary Poppendieck", number: "39-23-6423122" },
 ];
 
+app.use(express.json());
+
 app.get("/api/persons", (req, res) => {
   res.json(persons);
+});
+
+app.post("/api/persons", (req, res) => {
+  const { name, number } = req.body;
+
+  const newPerson = {
+    id: Math.floor(Math.random() * 10000),
+    name,
+    number,
+  };
+
+  persons = persons.concat(newPerson);
+
+  res.json(newPerson);
 });
 
 app.get("/api/persons/:id", (req, res) => {

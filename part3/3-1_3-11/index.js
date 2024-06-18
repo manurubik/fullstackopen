@@ -19,6 +19,14 @@ app.get("/api/persons", (req, res) => {
 app.post("/api/persons", (req, res) => {
   const { name, number } = req.body;
 
+  if (!name || !number) {
+    return res.status(400).json({ error: "Name or number missing" });
+  }
+
+  if (persons.some((person) => person.name === name)) {
+    return res.status(400).json({ error: "Name must be unique" });
+  }
+
   const newPerson = {
     id: Math.floor(Math.random() * 10000),
     name,

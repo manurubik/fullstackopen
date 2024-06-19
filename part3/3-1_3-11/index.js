@@ -1,5 +1,5 @@
-// index.js
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 const PORT = 3001;
 
@@ -11,6 +11,7 @@ let persons = [
 ];
 
 app.use(express.json());
+app.use(morgan("tiny"));
 
 app.get("/api/persons", (req, res) => {
   res.json(persons);
@@ -45,7 +46,7 @@ app.get("/api/persons/:id", (req, res) => {
   if (person) {
     res.json(person);
   } else {
-    res.status(404).end();
+    res.status(404).send({ error: "Person not found" });
   }
 });
 
